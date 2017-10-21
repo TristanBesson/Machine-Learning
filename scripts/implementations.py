@@ -87,9 +87,40 @@ def ridge_regression(y, tx, lambda_):
 
     return w, rmse
 
-def logistic_regression(y, tx, initial_w, max_iters, gamma):
+def sigmoid(t):
+    """apply sigmoid function on t."""
+    return 1.0/(1+np.exp(-t))
 
-    raise NotImplementedError
+ def calculate_loss(y, tx, w):
+    """compute the cost by negative log likelihood."""
+    pred = sigmoid(tx.dot(w))
+    loss = np.transpose(y).dot(np.log(pred)) + np.transpose(1-y).dot(np.log(1-pred))
+    return -loss[0][0]
+
+def calculate_gradient(y, tx, w):
+    """compute the gradient of loss."""
+    return np.transpose(tx).dot(sigmoid(tx.dot(w))-y)
+
+def calculate_hessian(y, tx, w):
+    """return the hessian of the loss function."""
+    # ***************************************************
+    # INSERT YOUR CODE HERE
+    # calculate hessian: TODO
+    # ***************************************************
+    S_diag = sigmoid(tx.dot(w))*(1-sigmoid(tx.dot(w)))
+    S = np.eye(S_diag.shape[0])*S_diag
+    return np.transpose(tx).dot(S).dot(tx)
+
+
+def logistic_regression(y, tx, initial_w, max_iters, gamma_):
+    w = initial_w
+
+    for iter_ in max_iters:
+        loss = calculate_loss(y,tx,w)
+        gradient = calculate_gradient(y,tx,w)
+        w -= gamma_*gradient # Pas sûr, faut peut etre faire avec le hessian
+    
+    return w
 
 def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
 
