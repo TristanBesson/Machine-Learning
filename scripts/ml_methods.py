@@ -30,7 +30,6 @@ def ridge_regression(y, tx, lambda_):
 def compute_loss(y, tx, w):
     """TODO: implement MAE"""
 
-
     """Calculate the loss.
     You can calculate the loss using mse or mae.
     """
@@ -42,7 +41,7 @@ def compute_loss(y, tx, w):
 def compute_gradient(y, tx, w):
     """Compute the gradient."""
     model = w*tx
-    error = y-model[:,0]-model[:,1]
+    error = y - model[:,0] - model[:,1]
     gradient = - (np.dot(tx.transpose(),error))/len(y)
     return gradient
 
@@ -52,6 +51,7 @@ def gradient_descent(y, tx, initial_w, max_iters, gamma):
     weights = [initial_w]
     losses = []
     w = initial_w
+    
     for n_iter in range(max_iters):
 
         #Compute gradient & losses

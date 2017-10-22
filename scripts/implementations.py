@@ -91,7 +91,7 @@ def sigmoid(t):
     """apply sigmoid function on t."""
     return 1.0/(1+np.exp(-t))
 
- def calculate_loss(y, tx, w):
+def calculate_loss(y, tx, w):
     """compute the cost by negative log likelihood."""
     pred = sigmoid(tx.dot(w))
     loss = np.transpose(y).dot(np.log(pred)) + np.transpose(1-y).dot(np.log(1-pred))
