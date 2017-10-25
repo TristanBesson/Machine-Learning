@@ -2,7 +2,6 @@
 """Implementation of ML methods for project 1"""
 import csv
 import numpy as np
-from helpers_functions import *
 
 
 #____________________________ LEAST SQUARES _____________________

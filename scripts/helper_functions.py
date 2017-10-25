@@ -2,7 +2,6 @@
 """Implementation of necessary methods for project 1"""
 import csv
 import numpy as np
-from learning_methods import *
 
 
 #____________________________ STANDARDIZE _____________________
