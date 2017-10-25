@@ -1,14 +1,18 @@
 ##Imports
+import numpy as np
+from ex_helpers import *  #checker le quel est le bon
+from proj1_helpers import *
+from implementations import *
 
 
 #Load data
-
-
-
-
+class_label,features,event_id = load_csv_data(/../data/train.csv)
 
 
 #Replace 999 of data with NaNs
+features_nan=features.copy()
+features_nan[features_nan ==-999] = np.nan
+
 #Maybe evaluate % of NaNs (if to much NaNs -> discard column)
 
 
