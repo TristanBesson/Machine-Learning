@@ -11,6 +11,7 @@ class_label,features,event_id = load_csv_data(DATA_TRAIN)
 
 
 #Replace 999 of data with NaNs
+#As stated in Learning to discover: the Higgs boson machine learning challenge undefined values were set to -999
 features_nan=features.copy()
 features_nan[features_nan ==-999] = np.nan
 
@@ -18,7 +19,7 @@ features_nan[features_nan ==-999] = np.nan
 
 #Maybe evaluate % of NaNs (if to much NaNs -> discard column)
 
-threshold_Drop = 0.5 
+threshold_Drop = 0.5
 
 for i in range(0,features_nan.shape[1]):
     column_count = 0
@@ -26,16 +27,16 @@ for i in range(0,features_nan.shape[1]):
         if np.isnan(features_nan.item((j,i))):
             column_count +=1
     percent_nan = float(column_count)/features_nan.shape[0]
-    
+
     if percent_nan > threshold_Drop:
-        print 'To drop column', i+1,'with ', percent_nan     
+        print 'To drop column', i+1,'with ', percent_nan
 
 ## CONCLUSION: We could drop columns 5,6,7,13,27,28,29 (70% de NaN); après aussi 24,25,26 avec 40% de NaN
 
 #__________________________________________________________________________________________________________________________
 
 #Standardize data by substracting to each colums its mean and dividing by standard deviation
-
+#While igniring NaNs
 tx = features_nan.copy()
 tx = np.delete(tx, 28, 1)
 tx = np.delete(tx, 27, 1)
@@ -46,7 +47,7 @@ tx = np.delete(tx, 5, 1)
 tx = np.delete(tx, 4, 1)
 
 for i in range(0,tx.shape[1]):
-    tx[:,i] = (tx[:,i] - np.nanmean(tx[:,i]))/np.nanstd(tx[:,i]) 
+    tx[:,i] = (tx[:,i] - np.nanmean(tx[:,i]))/np.nanstd(tx[:,i])
 
 
 #__________________________________________________________________________________________________________________________
