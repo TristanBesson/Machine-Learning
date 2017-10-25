@@ -4,6 +4,7 @@ from ex_helpers import *  #checker le quel est le bon
 from proj1_helpers import *
 from implementations import *
 
+print("LOL")
 
 #Load data
 DATA_TRAIN = 'data/train.csv'
