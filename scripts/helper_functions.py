@@ -153,3 +153,82 @@ def plot_train_test(train_errors, test_errors, lambdas, degree):
     leg.draw_frame(False)
     plt.savefig("ridge_regression")
 
+#____________________________ CROSS VALIDATION _____________________
+
+def cross_validation(y, x, k_indices, k, lambda_, degree):
+    """return the loss of ridge regression."""
+    # ***************************************************
+    # INSERT YOUR CODE HERE
+    # get k'th subgroup in test, others in train: TODO
+    # ***************************************************
+    k_fold = list(range(k_indices.shape[0]))
+    k_fold.remove(k)
+    tr_indices = k_indices[k_fold].ravel()
+    
+    x_train = x[tr_indices]
+    x_test = x[k_indices]
+    y_train = y[tr_indices]
+    y_test = y[k_indices]
+    
+    # ***************************************************
+    # INSERT YOUR CODE HERE
+    # form data with polynomial degree: TODO
+    # ***************************************************
+    train_matrix = build_poly(x_train, degree)
+    test_matrix = build_poly(x_test, degree)
+    
+    
+    # ***************************************************
+    # INSERT YOUR CODE HERE
+    # ridge regression: TODO
+    # ***************************************************
+    w, loss_tr = ridge_regression(y_train, train_matrix, lambda_)
+    
+    # ***************************************************
+    # INSERT YOUR CODE HERE
+    # calculate the loss for train and test data: TODO
+    # ***************************************************
+    loss_te = compute_mse(y_test, test_matrix, w)
+    
+    return loss_tr, loss_te
+
+def build_k_indices(y, k_fold, seed):
+    """build k indices for k-fold."""
+    num_row = y.shape[0]
+    interval = int(num_row / k_fold)
+    np.random.seed(seed)
+    indices = np.random.permutation(num_row)
+    k_indices = [indices[k * interval: (k + 1) * interval]
+                 for k in range(k_fold)]
+    return np.array(k_indices)
+
+def cross_validation_demo():
+    seed = 1
+    degree = 7
+    k_fold = 4
+    lambdas = np.logspace(-4, 0, 30)
+    # split data in k fold
+    k_indices = build_k_indices(y, k_fold, seed)
+    # define lists to store the loss of training data and test data
+    rmse_tr = []
+    rmse_te = []
+    # ***************************************************
+    # INSERT YOUR CODE HERE
+    # cross validation: TODO
+    # ***************************************************   
+    for lambda_ in lambdas:
+        tot_loss_tr = 0
+        tot_loss_te = 0
+        
+        for k in range(0, k_fold):
+            k_selected = k_indices[k,:]
+            loss_te, loss_tr = cross_validation(y, x, k_selected, k, lambda_, degree)
+            tot_loss_tr += loss_tr
+            tot_loss_te += loss_te
+    
+        rmse_tr.append(np.sqrt(2*tot_loss_tr))
+        rmse_te.append(np.sqrt(2*tot_loss_te))
+        
+    cross_validation_visualization(lambdas, rmse_tr, rmse_te)
+
+cross_validation_demo()
