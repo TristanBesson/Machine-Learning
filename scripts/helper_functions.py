@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 #____________________________ STANDARDIZE _____________________
 
 def standardize(x):
-    """Standardize the original data set."""
-    mean_x = np.mean(x)
+    """Standardize the original data set. Ignoring NaNs"""
+    mean_x = np.nanmean(x)
     x = x - mean_x
-    std_x = np.std(x)
+    std_x = np.nanstd(x)
     x = x / std_x
     return x, mean_x, std_x
 
@@ -20,7 +20,7 @@ def standardize(x):
 
 def feature_handling(tx):
     # Pre-processing, delete columns, delete features, PCA...
-    
+
     return tx
 
 
@@ -36,15 +36,15 @@ def split_data(x, y, ratio, seed=1):
     # ***************************************************
     np.random.shuffle(x)
     np.random.shuffle(y)
-    
+
     split = int(ratio*(x.shape[0]))
-    
+
     trainX = x[:split,]
     testX = x[split:,]
-    
+
     trainY = y[:split,]
     testY = y[split:,]
-    
+
     return trainX, testX, trainY, testY
 
 
@@ -52,12 +52,12 @@ def split_data(x, y, ratio, seed=1):
 #TODO
 def build_poly(x, degree):
     """polynomial basis functions for input data x, for j=0 up to j=degree."""
-    
+
     poly = np.ones((len(x), 1))
     for deg in range(1, degree+1):
         poly = np.c_[poly, np.power(x, deg)]
     return poly
-    
+
     return matrix
 
 
@@ -141,7 +141,7 @@ def plot_train_test(train_errors, test_errors, lambdas, degree):
     * lambda[0] = 1
     * train_errors[0] = RMSE of a ridge regression on the train set
     * test_errors[0] = RMSE of the parameter found by ridge regression applied on the test set
-    
+
     degree is just used for the title of the plot.
     """
     plt.semilogx(lambdas, train_errors, color='b', marker='*', label="Train error")
@@ -164,32 +164,32 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     k_fold = list(range(k_indices.shape[0]))
     k_fold.remove(k)
     tr_indices = k_indices[k_fold].ravel()
-    
+
     x_train = x[tr_indices]
     x_test = x[k_indices]
     y_train = y[tr_indices]
     y_test = y[k_indices]
-    
+
     # ***************************************************
     # INSERT YOUR CODE HERE
     # form data with polynomial degree: TODO
     # ***************************************************
     train_matrix = build_poly(x_train, degree)
     test_matrix = build_poly(x_test, degree)
-    
-    
+
+
     # ***************************************************
     # INSERT YOUR CODE HERE
     # ridge regression: TODO
     # ***************************************************
     w, loss_tr = ridge_regression(y_train, train_matrix, lambda_)
-    
+
     # ***************************************************
     # INSERT YOUR CODE HERE
     # calculate the loss for train and test data: TODO
     # ***************************************************
     loss_te = compute_mse(y_test, test_matrix, w)
-    
+
     return loss_tr, loss_te
 
 def build_k_indices(y, k_fold, seed):
@@ -215,20 +215,20 @@ def cross_validation_demo():
     # ***************************************************
     # INSERT YOUR CODE HERE
     # cross validation: TODO
-    # ***************************************************   
+    # ***************************************************
     for lambda_ in lambdas:
         tot_loss_tr = 0
         tot_loss_te = 0
-        
+
         for k in range(0, k_fold):
             k_selected = k_indices[k,:]
             loss_te, loss_tr = cross_validation(y, x, k_selected, k, lambda_, degree)
             tot_loss_tr += loss_tr
             tot_loss_te += loss_te
-    
+
         rmse_tr.append(np.sqrt(2*tot_loss_tr))
         rmse_te.append(np.sqrt(2*tot_loss_te))
-        
+
     cross_validation_visualization(lambdas, rmse_tr, rmse_te)
 
 cross_validation_demo()
