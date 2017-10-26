@@ -2,6 +2,7 @@
 """Implementation of necessary methods for project 1"""
 import csv
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 #____________________________ STANDARDIZE _____________________
@@ -48,14 +49,14 @@ def split_data(x, y, ratio, seed=1):
 
 
 #____________________________ BUILD POLYNOMIAL _____________________
-
+#TODO
 def build_poly(x, degree):
     """polynomial basis functions for input data x, for j=0 up to j=degree."""
-    matrix = np.zeros((x.shape[0],degree))
     
-    for i in range(0, x.shape[0]):
-        for j in range(0, degree):
-            matrix[i][j] = x[i]**j
+    poly = np.ones((len(x), 1))
+    for deg in range(1, degree+1):
+        poly = np.c_[poly, np.power(x, deg)]
+    return poly
     
     return matrix
 
@@ -80,7 +81,7 @@ def compute_gradient(y, tx, w):
     model = w*tx
     error = y - model[:,0] - model[:,1]
     gradient = - (np.dot(tx.transpose(),error))/len(y)
-    return gradient
+    return gradient, error
 
 
 #____________________________ COMPUTE MSE _____________________
@@ -131,3 +132,24 @@ def calculate_hessian(y, tx, w):
     S_diag = sigmoid(tx.dot(w))*(1-sigmoid(tx.dot(w)))
     S = np.eye(S_diag.shape[0])*S_diag
     return np.transpose(tx).dot(S).dot(tx)
+
+#____________________________ PLOT TRAIN TEST _____________________
+
+def plot_train_test(train_errors, test_errors, lambdas, degree):
+    """
+    train_errors, test_errors and lambas should be list (of the same size) the respective train error and test error for a given lambda,
+    * lambda[0] = 1
+    * train_errors[0] = RMSE of a ridge regression on the train set
+    * test_errors[0] = RMSE of the parameter found by ridge regression applied on the test set
+    
+    degree is just used for the title of the plot.
+    """
+    plt.semilogx(lambdas, train_errors, color='b', marker='*', label="Train error")
+    plt.semilogx(lambdas, test_errors, color='r', marker='*', label="Test error")
+    plt.xlabel("lambda")
+    plt.ylabel("RMSE")
+    plt.title("Ridge regression for polynomial degree " + str(degree))
+    leg = plt.legend(loc=1, shadow=True)
+    leg.draw_frame(False)
+    plt.savefig("ridge_regression")
+
