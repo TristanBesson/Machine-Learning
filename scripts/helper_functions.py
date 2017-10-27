@@ -25,7 +25,6 @@ def nan_handling(tx,value=None,coef=None):
         #One can delete entirely features containing NaN by setting coef to 0.0
     if coef:
         tx = features_nan.copy()
-        print(tx.shape[1])
         tx_count=np.count_nonzero(np.isnan(tx), axis = 0)
         tx = np.delete(tx,np.where(tx_count/tx.shape[0] > coef),1)
 

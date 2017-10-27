@@ -7,7 +7,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas
 import math
 
 from helper_functions import *
@@ -34,4 +33,15 @@ tx_nan[tx_nan ==-999] = np.nan
 #Standardize data
 tx, _, _ = standardize(tx)
 
+#Visualize data
+    #scatterplot
+    #boxplot
+    #tableau stylé
+
 #Handle missing data
+tx = nan_handling(tx)
+
+#Feature engineering
+
+
+#Apply regression
