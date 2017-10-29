@@ -3,13 +3,12 @@
 """run.py: Given a train and a testing data set run.py will train a model and test it by cross-validation"""
 
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
 import math
 
 from helper_functions import *
 from proj1_helpers import *
 from implementations import *
+from data_visualization import *
 
 __author__      = "Jean Gschwind, Tristan Besson and Sebastian Savidan"
 
@@ -39,37 +38,7 @@ tx_test, _, _ = standardize(tx_test_nan)
 
 # ____________________________ Visualize data ____________________________
 
-print("Plotting data...", end=" ")
-
-# Batch creation
-idx_batch = np.random.randint(tx_train.shape[0], size=int(0.02*tx_train.shape[0]))
-tx_train_batch = tx_train[idx_batch, :]
-y_train_batch = y_train[idx_batch]
-len_scatter = np.shape(tx_train_batch)[1]
-
-plt.figure(figsize=(60, 60), dpi=100, facecolor='w', edgecolor='k')
-
-index_scatter = 1
-colors = ["red", "blue"]
-
-for xfeature in range(len_scatter):
-    for yfeature in range(len_scatter):
-        plt.subplot(len_scatter, len_scatter, index_scatter)
-
-        if xfeature != yfeature:
-            plt.scatter(tx_train_batch[:, xfeature], tx_train_batch[:, yfeature], s=0.4,  c=y_train_batch, cmap=matplotlib.colors.ListedColormap(colors))
-        else:
-            feature_values = tx_train_batch[:, xfeature]
-            plt.hist(feature_values[~np.isnan(feature_values)], color="red")
-
-        plt.xticks(())
-        plt.yticks(())
-        index_scatter += 1
-
-print("Saved.")
-
-plt.subplots_adjust(wspace=0, hspace=0)
-plt.savefig('scatterplot_COLOR.png', dpi=100)
+data_visualization(tx_train, y_train)
 
 #Handle missing data
 tx_train = nan_handling(tx_train)
