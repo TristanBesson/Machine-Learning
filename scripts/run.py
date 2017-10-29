@@ -86,7 +86,7 @@ for lambda_ in lambdas:
         rmse_te.append(rmse_te_tmp)
 
         # On prend le lambda_ associé à la valeur la plus petite de rmse -> A AMELIORER
-        if (min_erreur > rmse_tr_tmp):
+        if (min_erreur > rmse_te_tmp):
             best_lambda = lambda_
             min_erreur = rmse_tr_tmp
 
