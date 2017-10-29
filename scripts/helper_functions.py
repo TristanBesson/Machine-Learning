@@ -15,26 +15,27 @@ def standardize(x):
     return x, mean_x, std_x
 
 #_______________________ FEATURE HANDLING _____________________
-# Must contain all the processing performed on the features (columns deletion, PCA...)
+
 def nan_handling(tx,value=None,coef=None):
     #Handle NaNs in different ways:
         #by default NaNs will be replaced with the mean value of the corresponding feature unless a specific replacement 'value' is given
         #the coef option gives the possibility of deleting features with more than coef*100% of NaNs in it
         #By default no feature is removed
         #One can delete entirely features containing NaN by setting coef to 0.0
+    tx_copy = tx.copy()
+    
     if coef:
-        tx = features_nan.copy()
-        tx_count=np.count_nonzero(np.isnan(tx), axis = 0)
-        tx = np.delete(tx,np.where(tx_count/tx.shape[0] > coef),1)
+        tx_count=np.count_nonzero(np.isnan(tx_copy), axis = 0)
+        tx_copy = np.delete(tx_copy,np.where(tx_count/tx_copy.shape[0] > coef),1)
 
     if value:
-        tx[np.isnan(tx)] = value
-        return tx
+        tx_copy[np.isnan(tx_copy)] = value
+        return tx_copy
     else:
-        column_mean = np.nanmean(tx,axis=0)
-        ind = np.where(np.isnan(tx))
-        tx[ind] = column_mean[ind[1]]
-        return tx
+        column_mean = np.nanmean(tx_copy,axis=0)
+        ind = np.where(np.isnan(tx_copy))
+        tx_copy[ind] = column_mean[ind[1]]
+        return tx_copy
 
 def feature_handling(tx):
     # Pre-processing, delete columns, delete features, PCA...
@@ -250,3 +251,30 @@ def build_k_indices(y, k_fold, seed):
 #     cross_validation_visualization(lambdas, rmse_tr, rmse_te)
 #
 # cross_validation_demo()
+
+#____________________________ BATCH ITER _____________________
+
+def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
+    """
+    Generate a minibatch iterator for a dataset.
+    Takes as input two iterables (here the output desired values 'y' and the input data 'tx')
+    Outputs an iterator which gives mini-batches of `batch_size` matching elements from `y` and `tx`.
+    Data can be randomly shuffled to avoid ordering in the original data messing with the randomness of the minibatches.
+    Example of use :
+    for minibatch_y, minibatch_tx in batch_iter(y, tx, 32):
+        <DO-SOMETHING>
+    """
+    data_size = len(y)
+
+    if shuffle:
+        shuffle_indices = np.random.permutation(np.arange(data_size))
+        shuffled_y = y[shuffle_indices]
+        shuffled_tx = tx[shuffle_indices]
+    else:
+        shuffled_y = y
+        shuffled_tx = tx
+    for batch_num in range(num_batches):
+        start_index = batch_num * batch_size
+        end_index = min((batch_num + 1) * batch_size, data_size)
+        if start_index != end_index:
+            yield shuffled_y[start_index:end_index], shuffled_tx[start_index:end_index]
