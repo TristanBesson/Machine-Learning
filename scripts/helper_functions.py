@@ -3,7 +3,7 @@
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
-from implementations import *
+from implementations import ridge_regression
 
 #____________________________ STANDARDIZE _____________________
 
@@ -187,6 +187,8 @@ def plot_train_test(train_errors, test_errors, lambdas, degree):
 
 #____________________________ CROSS VALIDATION _____________________
 
+
+
 def cross_validation(y, x, k_indices, k, lambda_, degree):
     """return the loss of ridge regression."""
     te_indice = k_indices[k]
@@ -201,7 +203,7 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     tx_tr = build_poly(x_tr, degree)
     tx_te = build_poly(x_te, degree)
     # ridge regression
-    w = ridge_regression(y_tr, tx_tr, lambda_)
+    w, loss = ridge_regression(y_tr, tx_tr, lambda_)
     # calculate the loss for train and test data
     e_tr = y_tr - tx_tr.dot(w)
     loss_tr = np.sqrt(2 * compute_mse(e_tr))

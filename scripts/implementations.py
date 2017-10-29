@@ -2,8 +2,6 @@
 """Implementation of ML methods for project 1"""
 import csv
 import numpy as np
-from helper_functions import *
-
 
 #____________________________ LEAST SQUARES _____________________
 
@@ -43,7 +41,7 @@ def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
     for n_iter in range(max_iters):
         for minibatch_y, minibatch_tx in batch_iter(y, tx, 32):
             gradient, error = compute_gradient(minibatch_y, minibatch_tx, w)
-            loss = compute_mse(error)
+            loss = 1/2*np.mean(error**2)
             w = w - gamma * gradient
 
     return w, loss
@@ -84,8 +82,8 @@ def ridge_regression(y, tx, lambda_):
     w = np.linalg.solve(a,b)
 
     e = y - tx.dot(w)
-    mse = compute_mse(e)
-    rmse = compute_rmse(mse)
+    mse = 1/2*np.mean(e**2)
+    rmse = np.sqrt(2*mse)
 
     return w, rmse
 

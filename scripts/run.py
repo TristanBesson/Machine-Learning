@@ -177,7 +177,7 @@ max_iters = 150
 seed = 1
 degree = 7
 k_fold = 4
-lambdas = np.logspace(-4, 0, 5)
+lambdas = np.logspace(-4, 0, 2)
 
 # split data in k fold
 k_indices = build_k_indices(y_train, k_fold, seed)
@@ -201,6 +201,7 @@ for lambda_ in lambdas:
         rmse_te_tmp = np.mean(loss_te)
 
         if (min_erreur > rmse_te_tmp):
+            print(min_erreur,">", rmse_te_tmp, "= best lambda found", )
             best_lambda = lambda_
             min_erreur = rmse_te_tmp
 
@@ -208,7 +209,7 @@ print("\nBest lambda =", best_lambda, "\n")
 #print(rmse_tr, "\n\n")
 
 # Calcul du model avec le meilleur lambda
-w = ridge_regression(y_train, tx_train, best_lambda)
+w, rmse = ridge_regression(y_train, tx_train, best_lambda)
 
 #Create submission file
 print("Creating submission file...")
