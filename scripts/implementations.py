@@ -57,7 +57,7 @@ def gradient_descent(y, tx, initial_w, max_iters, gamma):
     weights = [initial_w]
     losses = []
     w = initial_w
-    
+
     for n_iter in range(max_iters):
 
         #Compute gradient & losses
@@ -78,31 +78,22 @@ def gradient_descent(y, tx, initial_w, max_iters, gamma):
 
 def ridge_regression(y, tx, lambda_):
     """implement ridge regression."""
-
-    a = tx.T.dot(tx) + 2*(tx.shape[0])*lambda_*np.eye(tx.shape[1])
+    a = tx.T.dot(tx) + 2*tx.shape[0]*lambda_*np.identity(tx.shape[1])
     b = tx.T.dot(y)
 
-    w = np.linalg.solve(a,b)
-
-    e = y - tx.dot(w)
-    mse = compute_mse(e)
-    rmse = compute_rmse(mse)
-
-    return w, rmse
-
-
+    return np.linalg.solve(a, b)
 
 #____________________________ LOGISTIC REGRESSION _____________________
 
 def logistic_regression(y, tx, initial_w, max_iters, gamma_):
-    
+
     w = initial_w
 
     for iter_ in range(max_iters):
         loss = calculate_loss(y,tx,w)
         gradient = calculate_gradient(y,tx,w)
         w -= gamma_*gradient # Pas sûr, faut peut etre faire avec le hessian
-    
+
     return w
 
 #____________________ REGULARIZED LOGISTIC REGRESSION _____________

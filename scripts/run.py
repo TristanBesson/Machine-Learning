@@ -9,7 +9,6 @@ from helper_functions import *
 from proj1_helpers import *
 from implementations import *
 from data_visualization import *
-from feature_making import *
 
 __author__      = "Jean Gschwind, Tristan Besson and Sebastian Savidan"
 
@@ -38,57 +37,64 @@ tx_train, _, _ = standardize(tx_train_nan)
 tx_test, _, _ = standardize(tx_test_nan)
 
 # ____________________________ Visualize data ____________________________
-
 #data_visualization(tx_train, y_train)
+
+# ____________________________ Feature engineering____________________________
 
 #Handle missing data
 tx_train = nan_handling(tx_train)
 tx_test = nan_handling(tx_test)
 
-print("Engineering new features...")
 #Feature engineering
 #Test different features enginnering, TODO : find a way to select good featur engineering
-#First part: Apply various feature engineering process, if resulting feature as higher correlation to output as before
-for i in range(0,30):
-    new_x = exp_feat(tx_train[:,i])
-    new_Xtest = exp_feat(tx_test[:,i])
-    tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
-
-    new_x = cos_feat(tx_train[:,i])
-    new_Xtest = cos_feat(tx_test[:,i])
-    tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
-
-    new_x = sqrt_feat(tx_train[:,i])
-    new_Xtest = sqrt_feat(tx_test[:,i])
-    tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
-
-    new_x = log_feat(tx_train[:,i])
-    new_Xtest = log_feat(tx_test[:,i])
-    tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
-
-    for j in range(2,5):
-        new_x = power_feat(tx_train[:,i],j)
-        new_Xtest = power_feat(tx_test[:,i],j)
-        tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
-
-print(np.shape(tx_train))
-
-#Second part apply multiplication to features thaht seem correlated from figure scatterplot matrix
-
-
-
-
 print("Applying regression...")
 #Apply regression
-#Least squares
-tx_train = np.c_[np.ones((y_train.shape[0],1)),tx_train]
-tx_test = np.c_[np.ones((tx_test.shape[0],1)),tx_test]
-w,loss = least_squares(y_train, tx_train)
+# tx=np.c_[np.ones((y.shape[0],1)),tx]
+# w,loss = least_squares(y, tx)
 
 #TODO : faire un truc qui check le meilleur lambda avec un cross validation
-#least_squares_GD(y_train, tx_train, initial_w, max_iters, gamma)
-#least_squares_SGD(y_train, tx_train, initial_w, max_iters, gamma)
-#w, loss = ridge_regression(y_train, tx_train, 0.00000000001)
+#least_squares_GD(y, tx, initial_w, max_iters, gamma)
+#least_squares_SGD(y, tx, initial_w, max_iters, gamma)
+
+seed = 1
+degree = 7
+k_fold = 4
+lambdas = np.logspace(-4, 0, 5)
+
+# split data in k fold
+k_indices = build_k_indices(y_train, k_fold, seed)
+
+# define lists to store the loss of training data and test data
+rmse_tr = []
+rmse_te = []
+
+best_lambda = 0
+min_erreur = 100
+
+# cross validation
+for lambda_ in lambdas:
+    print("\nlambda :", lambda_)
+    rmse_tr_tmp = []
+    rmse_te_tmp = []
+
+    for k in range(k_fold):
+        loss_tr, loss_te = cross_validation(y_train, tx_train, k_indices, k, lambda_, degree)
+        rmse_tr_tmp = np.mean(loss_tr)
+        rmse_te_tmp = np.mean(loss_te)
+
+        rmse_tr.append(rmse_tr_tmp)
+        rmse_te.append(rmse_te_tmp)
+
+        # On prend le lambda_ associé à la valeur la plus petite de rmse -> A AMELIORER
+        if (min_erreur > rmse_tr_tmp):
+            best_lambda = lambda_
+            min_erreur = rmse_tr_tmp
+
+print("Best lambda =", best_lambda, "\n\n")
+#print(rmse_tr, "\n\n")
+
+# Calcul du model avec le meilleur lambda
+w = ridge_regression(y_train, tx_train, best_lambda)
 
 #Create submission file
 print("Creating submission file...")
