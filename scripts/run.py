@@ -9,6 +9,7 @@ from helper_functions import *
 from proj1_helpers import *
 from implementations import *
 from data_visualization import *
+from feature_making import *
 
 __author__      = "Jean Gschwind, Tristan Besson and Sebastian Savidan"
 
@@ -47,12 +48,129 @@ tx_test = nan_handling(tx_test)
 
 #Feature engineering
 #Test different features enginnering, TODO : find a way to select good featur engineering
+#First part: Apply various feature engineering process, if resulting feature as higher correlation to output as before
+for i in range(0,30):
+    new_x = exp_feat(tx_train[:,i])
+    new_Xtest = exp_feat(tx_test[:,i])
+    tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x = cos_feat(tx_train[:,i])
+    new_Xtest = cos_feat(tx_test[:,i])
+    tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x = sqrt_feat(tx_train[:,i])
+    new_Xtest = sqrt_feat(tx_test[:,i])
+    tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x = log_feat(tx_train[:,i])
+    new_Xtest = log_feat(tx_test[:,i])
+    tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
+
+    for j in range(2,6):
+        new_x = power_feat(tx_train[:,i],j)
+        new_Xtest = power_feat(tx_test[:,i],j)
+        tx_train, tx_test = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
+
+print(np.shape(tx_train))
+
+#Second part apply multiplication to features that seem correlated from figure scatterplot matrix
+#Features couples that seem correlated from graph: (0,2:7),(2,7),(3,7:9:21:23:29),(4,5:6),(5,6),(9,21:23:29),(10,16),(18,20),(19,21:29),(21,24:29),(26,29)
+# 22 features couples in total
+new_x = multiple_feat(tx_train[:,0],tx_train[:,2])
+new_Xtest = multiple_feat(tx_test[:,0],tx_test[:,2])
+tx_train, tx_test = feat_add(y_train,tx_train[:,0],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,0],tx_train[:,7])
+new_Xtest = multiple_feat(tx_test[:,0],tx_test[:,7])
+tx_train, tx_test = feat_add(y_train,tx_train[:,0],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,2],tx_train[:,7])
+new_Xtest = multiple_feat(tx_test[:,2],tx_test[:,7])
+tx_train, tx_test = feat_add(y_train,tx_train[:,2],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,3],tx_train[:,7])
+new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,7])
+tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,3],tx_train[:,9])
+new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,9])
+tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,3],tx_train[:,21])
+new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,21])
+tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,3],tx_train[:,23])
+new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,23])
+tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,3],tx_train[:,29])
+new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,29])
+tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,4],tx_train[:,5])
+new_Xtest = multiple_feat(tx_test[:,4],tx_test[:,5])
+tx_train, tx_test = feat_add(y_train,tx_train[:,4],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,4],tx_train[:,6])
+new_Xtest = multiple_feat(tx_test[:,4],tx_test[:,6])
+tx_train, tx_test = feat_add(y_train,tx_train[:,4],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,5],tx_train[:,6])
+new_Xtest = multiple_feat(tx_test[:,5],tx_test[:,6])
+tx_train, tx_test = feat_add(y_train,tx_train[:,5],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,9],tx_train[:,21])
+new_Xtest = multiple_feat(tx_test[:,9],tx_test[:,21])
+tx_train, tx_test = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,9],tx_train[:,23])
+new_Xtest = multiple_feat(tx_test[:,9],tx_test[:,23])
+tx_train, tx_test = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,9],tx_train[:,29])
+new_Xtest = multiple_feat(tx_test[:,9],tx_test[:,29])
+tx_train, tx_test = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,10],tx_train[:,16])
+new_Xtest = multiple_feat(tx_test[:,10],tx_test[:,16])
+tx_train, tx_test = feat_add(y_train,tx_train[:,10],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,18],tx_train[:,20])
+new_Xtest = multiple_feat(tx_test[:,18],tx_test[:,20])
+tx_train, tx_test = feat_add(y_train,tx_train[:,18],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,19],tx_train[:,21])
+new_Xtest = multiple_feat(tx_test[:,19],tx_test[:,21])
+tx_train, tx_test = feat_add(y_train,tx_train[:,19],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,21],tx_train[:,24])
+new_Xtest = multiple_feat(tx_test[:,21],tx_test[:,24])
+tx_train, tx_test = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,21],tx_train[:,29])
+new_Xtest = multiple_feat(tx_test[:,21],tx_test[:,29])
+tx_train, tx_test = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
+
+new_x = multiple_feat(tx_train[:,26],tx_train[:,29])
+new_Xtest = multiple_feat(tx_test[:,26],tx_test[:,29])
+tx_train, tx_test = feat_add(y_train,tx_train[:,26],new_x,new_Xtest,tx_train,tx_test)
+
+print(np.shape(tx_train))
+
+# ____________________________ Regression____________________________
+
 print("Applying regression...")
 #Apply regression
-# tx=np.c_[np.ones((y.shape[0],1)),tx]
-# w,loss = least_squares(y, tx)
+tx_train = np.c_[np.ones((y_train.shape[0],1)),tx_train]
+tx_test = np.c_[np.ones((tx_test.shape[0],1)),tx_test]
 
-#TODO : faire un truc qui check le meilleur lambda avec un cross validation
+initial_w = np.zeros(tx_train.shape[1])
+max_iters = 150
+#gamma_ = 0.035
+
+# w,loss = least_squares(y_train, tx_train)
+#w = logistic_regression(y_train, tx_train, initial_w, max_iters, gamma_)
 #least_squares_GD(y, tx, initial_w, max_iters, gamma)
 #least_squares_SGD(y, tx, initial_w, max_iters, gamma)
 

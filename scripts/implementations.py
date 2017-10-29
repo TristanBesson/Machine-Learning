@@ -81,7 +81,13 @@ def ridge_regression(y, tx, lambda_):
     a = tx.T.dot(tx) + 2*tx.shape[0]*lambda_*np.identity(tx.shape[1])
     b = tx.T.dot(y)
 
-    return np.linalg.solve(a, b)
+    w = np.linalg.solve(a,b)
+
+    e = y - tx.dot(w)
+    mse = compute_mse(e)
+    rmse = compute_rmse(mse)
+
+    return w, rmse
 
 #____________________________ LOGISTIC REGRESSION _____________________
 
@@ -99,5 +105,4 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma_):
 #____________________ REGULARIZED LOGISTIC REGRESSION _____________
 
 def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
-
-    raise NotImplementedError
+    return w
