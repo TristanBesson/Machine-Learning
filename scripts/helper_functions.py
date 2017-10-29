@@ -23,11 +23,11 @@ def nan_handling(tx,value=None,coef=None):
         #By default no feature is removed
         #One can delete entirely features containing NaN by setting coef to 0.0
     tx_copy = tx.copy()
-    
+
     if coef:
         tx_count=np.count_nonzero(np.isnan(tx_copy), axis = 0)
         tx_copy = np.delete(tx_copy,np.where(tx_count/tx_copy.shape[0] > coef),1)
-
+        print("Features might have been deleted")
     if value:
         tx_copy[np.isnan(tx_copy)] = value
         return tx_copy
@@ -39,9 +39,22 @@ def nan_handling(tx,value=None,coef=None):
 
 def feature_handling(tx):
     # Pre-processing, delete columns, delete features, PCA...
-
     return tx
 
+def feat_add(y,x,new_x,new_Xtest,tx_train,tX_test):
+    if feat_test(y,x,new_x):
+        print("Feature added")
+        tx_train = np.c_[tx_train,new_x]
+        tX_test = np.c_[tX_test,new_Xtest]
+    else: print("new feature worse")
+    return tx_train, tX_test
+
+def feat_test(y,x,new_x):
+    #feat_test will test if a new feature is more correlated to an other one
+    if abs(np.corrcoef(y,x)[1,0]) < abs(np.corrcoef(y,new_x)[1,0]):
+        return True
+    else:
+        return False
 
 #____________________________ SPLIT DATASET _____________________
 
