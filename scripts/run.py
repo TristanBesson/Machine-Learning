@@ -82,15 +82,11 @@ for lambda_ in lambdas:
         rmse_tr_tmp = np.mean(loss_tr)
         rmse_te_tmp = np.mean(loss_te)
 
-        rmse_tr.append(rmse_tr_tmp)
-        rmse_te.append(rmse_te_tmp)
-
-        # On prend le lambda_ associé à la valeur la plus petite de rmse -> A AMELIORER
         if (min_erreur > rmse_te_tmp):
             best_lambda = lambda_
-            min_erreur = rmse_tr_tmp
+            min_erreur = rmse_te_tmp
 
-print("Best lambda =", best_lambda, "\n\n")
+print("\nBest lambda =", best_lambda, "\n")
 #print(rmse_tr, "\n\n")
 
 # Calcul du model avec le meilleur lambda
