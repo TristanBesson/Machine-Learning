@@ -40,10 +40,10 @@ def cross_validation_lambda(y, x, k_indices, k, lambda_, degree, model_function)
     e_test = y_test - x_test.dot(w)
     loss_test = np.sqrt(2*compute_mse(e_test))
 
-    ## Compute the prediction and check the accuracy
-    #y_pred = predict_labels(w, x_test)
-    #acc = accuracy(y_pred, y_test)
-    #print("Accuracy: ", acc)
+    # Compute the prediction and check the accuracy
+    y_pred = predict_labels(w, x_test)
+    acc = accuracy(y_pred, y_test)
+    print("Accuracy: ", acc)
 
     return loss_train, loss_test
 
@@ -105,8 +105,12 @@ def find_best_lambda(y,x, degree, k_fold, model):
 
     return best_lambda, best_rmse_train, best_rmse_test
 
-def cross_validation(y, x, k_indices, k, degree, model_function):
-    """return the loss of ridge regression."""
+def cross_validation(y, x, k_fold, degree, model_function):
+    # Create different fold for the cross validation
+
+    k_indices = build_k_indices(y, k_fold, seed=1)
+    gamma = 0.01
+    max_iters = 500
 
     for k in range(k_fold):
 
@@ -120,14 +124,13 @@ def cross_validation(y, x, k_indices, k, degree, model_function):
         y_train = np.delete(y, indice_test, axis=0)
 
         initial_w = np.zeros((x_train.shape[1], 1))
-        max_iters = 500
-        gamma = 0.01
 
         # Choose the correct model
         model = model_function.__name__
+        print(model)
 
         if model == "least_squares_GD" or model == "least_squares_SGD" or model == "logistic_regression":
-            w, loss = model_function(y_train, x_train, initial_w, gamma)
+            w, loss = model_function(y_train, x_train, initial_w, max_iters, gamma)
         else:
             w, loss = model_function(y_train, x_train)
 
@@ -141,3 +144,5 @@ def cross_validation(y, x, k_indices, k, degree, model_function):
         y_pred = predict_labels(w, x_test)
         acc = accuracy(y_pred, y_test)
         print("Accuracy: ", acc)
+
+    return w

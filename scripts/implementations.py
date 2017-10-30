@@ -91,24 +91,13 @@ def ridge_regression(y, tx, lambda_):
 
 def logistic_regression(y, tx, initial_w, max_iters, gamma_):
 
-    losses = []
-    threshold = 1e-5
+    w = initial_w
 
     for iter_ in range(max_iters):
-        # Computation of Hessian & Gradient matrix
-        hessian = calculate_hessian(y, tx, w)
-        gradient = calculate_gradient(y, tx, w)
-
-        # Compute loss
-        loss = calculate_loss(y, tx, w)
-
-        # Best w using Newton method
-        w = w - np.linalg.solve(hessian, gradient)
-
-        # Stop if w converge
-        losses.append(loss)
-        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < thresh:
-            break
+        for y_batch, tx_batch in batch_iter(y, tx, batch_size=1, num_batches=1):
+            loss = calculate_loss(y_batch,tx_batch,w)
+            gradient = calculate_gradient(y_batch,tx_batch,w)
+            w -= gamma_*gradient
 
     return w, loss # return last and best w and loss
 

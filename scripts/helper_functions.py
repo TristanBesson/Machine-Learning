@@ -141,7 +141,6 @@ def calculate_loss(y, tx, w):
     """compute the cost by negative log likelihood."""
     pred = sigmoid(tx.dot(w))
     loss = np.transpose(y).dot(np.log(pred)) + np.transpose(1-y).dot(np.log(1-pred))
-    print("\n\n loss", loss, end="\n\n")
     return -loss
 
 
@@ -157,10 +156,6 @@ def calculate_gradient(y, tx, w):
 
 def calculate_hessian(y, tx, w):
     """return the hessian of the loss function."""
-    # ***************************************************
-    # INSERT YOUR CODE HERE
-    # calculate hessian: TODO
-    # ***************************************************
     S_diag = sigmoid(tx.dot(w))*(1-sigmoid(tx.dot(w)))
     S = np.eye(S_diag.shape[0])*S_diag
     return np.transpose(tx).dot(S).dot(tx)

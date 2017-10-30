@@ -182,7 +182,7 @@ if token == False:
     tx_train, tx_test, token = feat_add(y_train,tx_train[:,29],new_x,new_Xtest,tx_train,tx_test)
 
 print(np.shape(tx_train))
-degree = 6
+degree = 4
 tx_train = build_poly(tx_train, degree)
 tx_test = build_poly(tx_test, degree)
 print(np.shape(tx_train))
@@ -204,16 +204,18 @@ max_iters = 150
 
 # ____________________________ Cross Validation ____________________________
 
-print("Founding best lambda...")
+print("Research best lambda...")
 degree = 4
 k_fold = 4
-best_lambda, _, _ = find_best_lambda(y_train,tx_train, degree, k_fold, ridge_regression)
 
 # Compute with best lambda
+best_lambda, _, _ = find_best_lambda(y_train,tx_train, degree, k_fold, ridge_regression)
 w, rmse = ridge_regression(y_train, tx_train, best_lambda)
 
+#print("Check accuracy...")
+#w = cross_validation(y_train, tx_train, k_fold, degree, least_squares_SGD)
 
-# ____________________________ Cross Validation ____________________________
+
 
 
 #Create submission file
