@@ -50,7 +50,8 @@ tx_test = nan_handling(tx_test)
 
 print("Engineering new features...")
 #Feature engineering
-#Test different features enginnering, TODO : find a way to select good featur engineering
+#Test different features enginnering,
+
 #First part: Apply various feature engineering process, if resulting feature as higher correlation to output as before
 for i in range(0,30):
     new_x = exp_feat(tx_train[:,i])
@@ -69,16 +70,17 @@ for i in range(0,30):
     new_Xtest = log_feat(tx_test[:,i])
     tx_train, tx_test,_ = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
 
-    for j in range(2,6):
-        new_x = power_feat(tx_train[:,i],j)
-        new_Xtest = power_feat(tx_test[:,i],j)
-        tx_train, tx_test,_ = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
+    # for j in range(2,6):
+    #     new_x = power_feat(tx_train[:,i],j)
+    #     new_Xtest = power_feat(tx_test[:,i],j)
+    #     tx_train, tx_test,_ = feat_add(y_train,tx_train[:,i],new_x,new_Xtest,tx_train,tx_test)
 
 print(np.shape(tx_train))
 
 #Second part apply multiplication to features that seem correlated from figure scatterplot matrix
-#Features couples that seem correlated from graph: (0,2:7),(2,7),(3,7:9:21:23:29),(4,5:6),(5,6),(9,21:23:29),(10,16),(18,20),(19,21:29),(21,24:29),(26,29)
-# 22 features couples in total
+#Features couples that seem correlated from graph: (0,2:7),(2,7),(3,7:9:21:23:29),(4,5:6),(5,6),(9,21:23:29),(10,16),(18,20),(19,21),(21,24:29),(26,29)
+# 20 features couples in total
+
 new_x, new_Xtest =create_multiple(tx_train,tx_test,0,2)
 tx_train, tx_test, token = feat_add(y_train,tx_train[:,0],new_x,new_Xtest,tx_train,tx_test)
 if token == False:
@@ -180,7 +182,7 @@ if token == False:
     tx_train, tx_test, token = feat_add(y_train,tx_train[:,29],new_x,new_Xtest,tx_train,tx_test)
 
 print(np.shape(tx_train))
-degree = 4
+degree = 6
 tx_train = build_poly(tx_train, degree)
 tx_test = build_poly(tx_test, degree)
 print(np.shape(tx_train))
@@ -239,6 +241,7 @@ best_lambda, best_rmse_tr, best_rmse_te = cross_validation_final(y_train,tx_trai
 #print(rmse_tr, "\n\n")
 
 # Calcul du model avec le meilleur lambda
+#w,loss = least_squares(y_train, tx_train)
 w, rmse = ridge_regression(y_train, tx_train, best_lambda)
 
 
