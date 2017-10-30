@@ -192,7 +192,7 @@ def plot_train_test(train_errors, test_errors, lambdas, degree):
 
 
 
-def cross_validation(y, x, k_indices, k, lambda_, degree):
+def cross_validation(y, x, k_indices, k, lambda_, degree, model):
     """return the loss of ridge regression."""
     te_indice = k_indices[k]
     tr_indice = k_indices[~(np.arange(k_indices.shape[0]) == k)]
@@ -208,7 +208,7 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     tx_tr = x_tr
     tx_te = x_te
     # ridge regression
-    w, loss = ridge_regression(y_tr, tx_tr, lambda_)
+    w, loss = model(y_tr, tx_tr, lambda_)
     # calculate the loss for train and test data
     e_tr = y_tr - tx_tr.dot(w)
     loss_tr = np.sqrt(2 * compute_mse(e_tr))

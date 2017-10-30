@@ -91,16 +91,46 @@ def ridge_regression(y, tx, lambda_):
 
 def logistic_regression(y, tx, initial_w, max_iters, gamma_):
 
-    w = initial_w
+    losses = []
+    threshold = 1e-5
 
     for iter_ in range(max_iters):
-        loss = calculate_loss(y,tx,w)
-        gradient = calculate_gradient(y,tx,w)
-        w -= gamma_*gradient # Pas sûr, faut peut etre faire avec le hessian
+        # Computation of Hessian & Gradient matrix
+        hessian = calculate_hessian(y, tx, w)
+        gradient = calculate_gradient(y, tx, w)
 
-    return w
+        # Compute loss
+        loss = calculate_loss(y, tx, w)
+
+        # Best w using Newton method
+        w = w - np.linalg.solve(hessian, gradient)
+
+        # Stop if w converge
+        losses.append(loss)
+        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < thresh:
+            break
+
+    return w, loss # return last and best w and loss
 
 #____________________ REGULARIZED LOGISTIC REGRESSION _____________
 
 def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
-    return w
+
+    losses = []
+    threshold = 1e-5
+
+    for iter in range(max_iter):
+        # Computation of Gradient matrix with penalization
+        gradient = calculate_gradient(y, tx, w) + lambda_*w[:,0]
+        # Compute loss with penalization
+        loss = calculate_loss(y, tx, w) + lambda_*np.dot(w.T, w)[0,0]
+
+        # Best w using Newton method
+        w = w - gamma*gradient
+
+        # Stop if w converge
+        losses.append(loss)
+        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < thresh:
+            break
+
+    return w, loss # return last and best w and loss
