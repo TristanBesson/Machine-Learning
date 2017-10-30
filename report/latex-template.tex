@@ -28,7 +28,7 @@
 
 \section{Introduction}
 
-In this project, a full implementation of machine learning methods is made from scratch. The dataset is first being observed, in order to construct a coherent feature processing. From there, some algorithms are tested in order to produce the best results. With our current setup, we were able to achieve a percentage of XX,XX\% of correct predictions on the Kaggle competition.
+In this project, a full implementation of machine learning methods is made from scratch. The dataset is first being observed, in order to construct a coherent feature processing. From there, some algorithms are tested in order to produce the best results. With our current setup, we were able to achieve a percentage of 82,057\% of correct predictions on the Kaggle competition.
 
 \section{Exploratory Analysis}
 
@@ -63,6 +63,32 @@ The first process was concerning the NaN values. A function nan\_handling can re
 Then, from the scatterplot matrix, we observe features that seem highly correlated; for example features 2 and 7. After that, we multiply them together and keep the resulting feature if the result is satisfying.
 
 \section{Machine Learning Methods}
+
+\subsection{Least Squares}
+
+Linear regression using a mean-squared error is one of the most popular method for data fitting. In this case, the problem consists in solving the normal equations of the system. This method is the most simple, without any explicit interation loop. To obtain better results, it is necessary to add a column of ones as a new feature. This will help the system to find an affine function solving the system (compared to a purely linear one). As a result, it yields the worst results in our system.
+
+\subsection{Linear Regression using Gradient Descent}
+
+In this case, the weight is not calculated through a simple equation solving, but rather updated over time. Given an initial weight vector and a maximum number of iterations, the gradient of the cost function is calculated, and the weight updated to go in the opposite direction. As seen in the class, this system won't perform well with a dataset with outliers.
+
+\subsection{Linear Regression using Stochastic Gradient Descent}
+
+In order to be robust to the previously mentioned outliers, one method consist in calculating the gradient for only a batch of the complete dataset, changing at each iteration. Otherwise, the principle of this method stays the same. 
+
+\subsection{Ridge Regression}
+
+\begin{figure}[hbp]
+  \centering
+  \includegraphics[width=\columnwidth]{ridge_regression.png}
+  \caption{Ridge Regression Error for a polynomial degree of 3}
+  \vspace{-3mm}
+  \label{fig:ridge}
+\end{figure}
+
+\subsection{Logistic Regression}
+
+\subsection{Regularized Logistic Regression}
 
 \section{Results}
 
