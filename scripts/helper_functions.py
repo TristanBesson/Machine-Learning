@@ -44,11 +44,13 @@ def feature_handling(tx):
 
 def feat_add(y,x,new_x,new_Xtest,tx_train,tX_test):
     if feat_test(y,x,new_x):
-        print("Feature added")
+        print("Feature is good, added")
         tx_train = np.c_[tx_train,new_x]
         tX_test = np.c_[tX_test,new_Xtest]
-    else: print("new feature worse")
-    return tx_train, tX_test
+        return tx_train, tX_test, True
+    else:
+        print("Feature was worse, not added")
+        return tx_train, tX_test, False
 
 def feat_test(y,x,new_x):
     #feat_test will test if a new feature is more correlated to an other one
