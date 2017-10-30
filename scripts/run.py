@@ -190,8 +190,8 @@ print(np.shape(tx_train))
 
 print("Applying regression...")
 #Apply regression
-tx_train = np.c_[np.ones((y_train.shape[0],1)),tx_train]
-tx_test = np.c_[np.ones((tx_test.shape[0],1)),tx_test]
+# tx_train = np.c_[np.ones((y_train.shape[0],1)),tx_train]  #Already done in build_poly
+# tx_test = np.c_[np.ones((tx_test.shape[0],1)),tx_test]
 
 initial_w = np.zeros(tx_train.shape[1])
 max_iters = 150

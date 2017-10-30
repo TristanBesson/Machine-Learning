@@ -38,9 +38,6 @@ def nan_handling(tx,value=None,coef=None):
         tx_copy[ind] = column_mean[ind[1]]
         return tx_copy
 
-def feature_handling(tx):
-    # Pre-processing, delete columns, delete features, PCA...
-    return tx
 
 def feat_add(y,x,new_x,new_Xtest,tx_train,tX_test):
     if feat_test(y,x,new_x):
@@ -88,12 +85,11 @@ def split_data(x, y, ratio, seed=1):
 def build_poly(x, degree):
     """polynomial basis functions for input data x, for j=0 up to j=degree."""
 
-    poly = np.ones((len(x), 1))
-    for deg in range(1, degree+1):
-        poly = np.c_[poly, np.power(x, deg)]
-    return poly
-
+    matrix = np.ones((x.shape[0], 1))
+    for j in range(1, degree+1):
+        matrix = np.c_[matrix, np.power(x, j)]
     return matrix
+
 
 
 #____________________________ COMPUTE LOSS _____________________
