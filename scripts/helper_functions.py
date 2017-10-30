@@ -4,6 +4,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 from implementations import ridge_regression
+from proj1_helpers import predict_labels
 
 #____________________________ STANDARDIZE _____________________
 
@@ -199,9 +200,11 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     x_te = x[te_indice]
     x_tr = x[tr_indice]
 
-    # form data with polynomial degree
-    tx_tr = build_poly(x_tr, degree)
-    tx_te = build_poly(x_te, degree)
+    # # form data with polynomial degree
+    # tx_tr = build_poly(x_tr, degree)
+    # tx_te = build_poly(x_te, degree)
+    tx_tr = x_tr
+    tx_te = x_te
     # ridge regression
     w, loss = ridge_regression(y_tr, tx_tr, lambda_)
     # calculate the loss for train and test data
@@ -210,6 +213,9 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
     e_te = y_te - tx_te.dot(w)
     loss_te = np.sqrt(2 * compute_mse(e_te))
 
+    y_pred = predict_labels(w,x_te)
+    acc = accuracy(y_pred,y_te)
+    print(acc)
     return loss_tr, loss_te
 
 def build_k_indices(y, k_fold, seed):
@@ -222,6 +228,8 @@ def build_k_indices(y, k_fold, seed):
                  for k in range(k_fold)]
     return np.array(k_indices)
 
+def accuracy(y_predicted,y):
+    return 1-sum(abs(y-y_predicted))/(2*len(y_predicted))
 #____________________________ BATCH ITER _____________________
 
 def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
