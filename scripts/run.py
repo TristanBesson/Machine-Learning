@@ -202,9 +202,13 @@ max_iters = 150
 #least_squares_GD(y, tx, initial_w, max_iters, gamma)
 #least_squares_SGD(y, tx, initial_w, max_iters, gamma)
 
+# ____________________________ Cross Validation ____________________________
+
 degree = 4
 k_fold = 4
+best_lambda, _, _ = find_best_lambda(y_train,tx_train, degree, k_fold, ridge_regression)
 
+<<<<<<< Updated upstream
 best_lambda, best_rmse_tr, best_rmse_te = cross_validation_final(y_train,tx_train, degree, k_fold, ridge_regression)
 
 # seed = 1
@@ -242,10 +246,13 @@ best_lambda, best_rmse_tr, best_rmse_te = cross_validation_final(y_train,tx_trai
 
 # Calcul du model avec le meilleur lambda
 #w,loss = least_squares(y_train, tx_train)
+=======
+# Compute with best lambda
+>>>>>>> Stashed changes
 w, rmse = ridge_regression(y_train, tx_train, best_lambda)
 
 
-
+# ____________________________ Cross Validation ____________________________
 
 
 #Create submission file

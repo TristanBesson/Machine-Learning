@@ -2,7 +2,7 @@
 """Implementation of ML methods for project 1"""
 import csv
 import numpy as np
-
+from helper_functions import *
 #____________________________ LEAST SQUARES _____________________
 
 
@@ -117,20 +117,24 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma_):
 def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
 
     losses = []
-    threshold = 1e-5
+    thresh = 1e-5
 
-    for iter in range(max_iter):
-        # Computation of Gradient matrix with penalization
-        gradient = calculate_gradient(y, tx, w) + lambda_*w[:,0]
-        # Compute loss with penalization
-        loss = calculate_loss(y, tx, w) + lambda_*np.dot(w.T, w)[0,0]
+    w = initial_w
 
-        # Best w using Newton method
-        w = w - gamma*gradient
+    for iter in range(max_iters):
+        for y_batch, tx_batch in batch_iter(y, tx, batch_size=1, num_batches=1):
 
-        # Stop if w converge
-        losses.append(loss)
-        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < thresh:
-            break
+            # Computation of Gradient matrix with penalization
+            gradient = calculate_gradient(y_batch, tx_batch, w) + 2*lambda_*w
+            # Compute loss with penalization
+            loss = calculate_loss(y_batch, tx_batch, w) + lambda_ * w.T.dot(w)
+
+            # Best w using Newton method
+            w = w - gamma*gradient
+
+            # Stop if w converge
+            #losses.append(loss)
+            #if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < thresh:
+            #   break
 
     return w, loss # return last and best w and loss

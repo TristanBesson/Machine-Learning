@@ -3,7 +3,7 @@
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
-from implementations import ridge_regression
+#from implementations import ridge_regression
 from proj1_helpers import predict_labels
 
 #____________________________ STANDARDIZE _____________________
@@ -145,7 +145,8 @@ def calculate_loss(y, tx, w):
     """compute the cost by negative log likelihood."""
     pred = sigmoid(tx.dot(w))
     loss = np.transpose(y).dot(np.log(pred)) + np.transpose(1-y).dot(np.log(1-pred))
-    return -loss[0][0]
+    print("\n\n loss", loss, end="\n\n")
+    return -loss
 
 
 #____________________________ COMPUTE GRADIENT FOR LOG REG _____________________
@@ -192,46 +193,7 @@ def plot_train_test(train_errors, test_errors, lambdas, degree):
 
 
 
-def cross_validation(y, x, k_indices, k, lambda_, degree, model):
-    """return the loss of ridge regression."""
-    te_indice = k_indices[k]
-    tr_indice = k_indices[~(np.arange(k_indices.shape[0]) == k)]
-    tr_indice = tr_indice.reshape(-1)
-    y_te = y[te_indice]
-    y_tr = y[tr_indice]
-    x_te = x[te_indice]
-    x_tr = x[tr_indice]
 
-    # # form data with polynomial degree
-    # tx_tr = build_poly(x_tr, degree)
-    # tx_te = build_poly(x_te, degree)
-    tx_tr = x_tr
-    tx_te = x_te
-    # ridge regression
-    w, loss = model(y_tr, tx_tr, lambda_)
-    # calculate the loss for train and test data
-    e_tr = y_tr - tx_tr.dot(w)
-    loss_tr = np.sqrt(2 * compute_mse(e_tr))
-    e_te = y_te - tx_te.dot(w)
-    loss_te = np.sqrt(2 * compute_mse(e_te))
-
-    y_pred = predict_labels(w,x_te)
-    acc = accuracy(y_pred,y_te)
-    print("Accuracy: ",acc)
-    return loss_tr, loss_te
-
-def build_k_indices(y, k_fold, seed):
-    """build k indices for k-fold."""
-    num_row = y.shape[0]
-    interval = int(num_row / k_fold)
-    np.random.seed(seed)
-    indices = np.random.permutation(num_row)
-    k_indices = [indices[k * interval: (k + 1) * interval]
-                 for k in range(k_fold)]
-    return np.array(k_indices)
-
-def accuracy(y_predicted,y):
-    return 1-sum(abs(y-y_predicted))/(2*len(y_predicted))
 
 
 #____________________________ BATCH ITER _____________________
