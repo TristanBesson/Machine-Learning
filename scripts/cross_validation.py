@@ -43,9 +43,9 @@ def cross_validation(y, x, indices_k, k, lambda_, degree, model_function):
     loss_test = np.sqrt(2*compute_mse(e_test))
 
     # Compute the prediction and check the accuracy
-    y_pred = predict_labels(w, x_test)
-    acc = accuracy(y_pred, y_test)
-    print("Accuracy: ", acc)
+    #y_pred = predict_labels(w, x_test)
+    #acc = accuracy(y_pred, y_test)
+    #print("Accuracy: ", acc)
 
     return loss_train, loss_test
 
@@ -77,7 +77,6 @@ def find_best_lambda(y,x, degree, k_fold, model):
 
     # cross validation
     for lambda_ in lambdas:
-        print("\nlambda :", lambda_)
         rmse_tr_tmp = []
         rmse_te_tmp = []
 

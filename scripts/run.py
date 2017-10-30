@@ -204,6 +204,7 @@ max_iters = 150
 
 # ____________________________ Cross Validation ____________________________
 
+print("Founding best lambda...")
 degree = 4
 k_fold = 4
 best_lambda, _, _ = find_best_lambda(y_train,tx_train, degree, k_fold, ridge_regression)
