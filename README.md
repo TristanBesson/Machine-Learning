@@ -2,6 +2,11 @@
 
 ## Higgs Boson Machine Learning Challenge
 
+### Submission for the group composed of Jean Gschwind, Sebastian Savidan & Tristan Besson.
+
+Kaggle name "No Regress"
+
+
 _run.py_
 
 Function that creates the results found on the Kaggle competition. It contains all the necessary steps, from loading, processing the features and then applying the machine learning method. It will create directly a submission file for the competition.
@@ -29,6 +34,3 @@ Contains a set of different transformation one can apply to data in order to cre
 _proj1-helpers.py_
 
 Functions furnished for the competition
-
-_scatterplot-features.py_
-
