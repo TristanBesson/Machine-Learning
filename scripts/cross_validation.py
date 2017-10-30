@@ -58,7 +58,6 @@ def build_k_indices(y, k_fold, seed):
     k_indices = [indices[k * interval: (k + 1) * interval] for k in range(k_fold)]
     return np.array(k_indices)
 
-
 def find_best_lambda(y,x, degree, k_fold, model):
 
     nb_lambdas = 20
