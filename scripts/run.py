@@ -182,7 +182,7 @@ if token == False:
     tx_train, tx_test, token = feat_add(y_train,tx_train[:,29],new_x,new_Xtest,tx_train,tx_test)
 
 print(np.shape(tx_train))
-degree = 4
+degree = 6
 tx_train = build_poly(tx_train, degree)
 tx_test = build_poly(tx_test, degree)
 print(np.shape(tx_train))
@@ -210,9 +210,10 @@ k_fold = 4
 
 # Compute with best lambda
 best_lambda, _, _ = find_best_lambda(y_train,tx_train, degree, k_fold, ridge_regression)
+print("Calculating best model...")
 w, rmse = ridge_regression(y_train, tx_train, best_lambda)
 
-#print("Check accuracy...")
+#print("ChecPowers a feature x to a given degreek accuracy...")
 #w = cross_validation(y_train, tx_train, k_fold, degree, least_squares_SGD)
 
 
