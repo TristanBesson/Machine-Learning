@@ -55,7 +55,7 @@ def build_k_indices(y, k_fold, seed):
 def find_best_lambda(y,x, degree, k_fold, model):
 
     seed = 1
-    lambdas = np.logspace(-10, 0, 10)
+    lambdas = np.logspace(-10, 0, 15)
 
     k_indices = build_k_indices(y, k_fold, seed)
 

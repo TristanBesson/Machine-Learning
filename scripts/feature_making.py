@@ -51,3 +51,106 @@ def power_feat(x,degree):
     """Powers a feature x to a given degree"""
     pow_x = np.power(x, degree)
     return pow_x
+
+def features_couples(tx_train,tx_test,y_train):
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,0,2)
+    tx_train, tx_test, token = feat_add(y_train,tx_train[:,0],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,2],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,0,7)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,0],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,7],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,2,7)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,2],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,7],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,3,7)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,7],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,3,9)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,3,21)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,3,23)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,23],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,3,29)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,29],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,4,5)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,4],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,5],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,4,6)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,4],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,6],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,5,6)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,5],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,6],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,9,21)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,9,23)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,23],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,9,29)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,29],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,10,16)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,10],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,16],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,18,20)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,18],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,20],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,19,21)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,19],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,21,24)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,24],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,21,29)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,29],new_x,new_Xtest,tx_train,tx_test)
+
+    new_x, new_Xtest = create_multiple(tx_train,tx_test,26,29)
+    tx_train, tx_test, token  = feat_add(y_train,tx_train[:,26],new_x,new_Xtest,tx_train,tx_test)
+    if token == False:
+        tx_train, tx_test, token = feat_add(y_train,tx_train[:,29],new_x,new_Xtest,tx_train,tx_test)
+    return tx_train, tx_test
