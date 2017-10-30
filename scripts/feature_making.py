@@ -53,6 +53,9 @@ def power_feat(x,degree):
     return pow_x
 
 def features_couples(tx_train,tx_test,y_train):
+    """Set of features combinaisions my multiplication picked by hand"""
+
+#TODO : clean the code
 
     new_x, new_Xtest = create_multiple(tx_train,tx_test,0,2)
     tx_train, tx_test, token = feat_add(y_train,tx_train[:,0],new_x,new_Xtest,tx_train,tx_test)
