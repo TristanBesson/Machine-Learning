@@ -25,6 +25,12 @@ def multiple_feat(x1,x2):
     mult_x = np.multiply(x1,x2)
     return mult_x
 
+def create_multiple(tx_train,tx_test,ind1,ind2):
+    new_x = multiple_feat(tx_train[:,ind1],tx_train[:,ind2])
+    new_Xtest = multiple_feat(tx_test[:,ind1],tx_test[:,ind2])
+    return new_x, new_Xtest
+
+
 def cos_feat(x):
     """Apply cosinus on a feature x"""
     cos_x = np.cos(x)

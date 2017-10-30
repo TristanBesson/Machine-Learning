@@ -76,84 +76,64 @@ print(np.shape(tx_train))
 #Second part apply multiplication to features that seem correlated from figure scatterplot matrix
 #Features couples that seem correlated from graph: (0,2:7),(2,7),(3,7:9:21:23:29),(4,5:6),(5,6),(9,21:23:29),(10,16),(18,20),(19,21:29),(21,24:29),(26,29)
 # 22 features couples in total
-new_x = multiple_feat(tx_train[:,0],tx_train[:,2])
-new_Xtest = multiple_feat(tx_test[:,0],tx_test[:,2])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,0,2)
 tx_train, tx_test = feat_add(y_train,tx_train[:,0],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,0],tx_train[:,7])
-new_Xtest = multiple_feat(tx_test[:,0],tx_test[:,7])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,0,7)
 tx_train, tx_test = feat_add(y_train,tx_train[:,0],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,2],tx_train[:,7])
-new_Xtest = multiple_feat(tx_test[:,2],tx_test[:,7])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,2,7)
 tx_train, tx_test = feat_add(y_train,tx_train[:,2],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,3],tx_train[:,7])
-new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,7])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,3,7)
 tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,3],tx_train[:,9])
-new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,9])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,3,9)
 tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,3],tx_train[:,21])
-new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,21])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,3,21)
 tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,3],tx_train[:,23])
-new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,23])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,3,23)
 tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,3],tx_train[:,29])
-new_Xtest = multiple_feat(tx_test[:,3],tx_test[:,29])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,3,29)
 tx_train, tx_test = feat_add(y_train,tx_train[:,3],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,4],tx_train[:,5])
-new_Xtest = multiple_feat(tx_test[:,4],tx_test[:,5])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,4,5)
 tx_train, tx_test = feat_add(y_train,tx_train[:,4],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,4],tx_train[:,6])
-new_Xtest = multiple_feat(tx_test[:,4],tx_test[:,6])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,4,6)
 tx_train, tx_test = feat_add(y_train,tx_train[:,4],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,5],tx_train[:,6])
-new_Xtest = multiple_feat(tx_test[:,5],tx_test[:,6])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,5,6)
 tx_train, tx_test = feat_add(y_train,tx_train[:,5],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,9],tx_train[:,21])
-new_Xtest = multiple_feat(tx_test[:,9],tx_test[:,21])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,9,21)
 tx_train, tx_test = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,9],tx_train[:,23])
-new_Xtest = multiple_feat(tx_test[:,9],tx_test[:,23])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,9,23)
 tx_train, tx_test = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,9],tx_train[:,29])
-new_Xtest = multiple_feat(tx_test[:,9],tx_test[:,29])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,9,29)
 tx_train, tx_test = feat_add(y_train,tx_train[:,9],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,10],tx_train[:,16])
-new_Xtest = multiple_feat(tx_test[:,10],tx_test[:,16])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,10,16)
 tx_train, tx_test = feat_add(y_train,tx_train[:,10],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,18],tx_train[:,20])
-new_Xtest = multiple_feat(tx_test[:,18],tx_test[:,20])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,18,20)
 tx_train, tx_test = feat_add(y_train,tx_train[:,18],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,19],tx_train[:,21])
-new_Xtest = multiple_feat(tx_test[:,19],tx_test[:,21])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,19,21)
 tx_train, tx_test = feat_add(y_train,tx_train[:,19],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,21],tx_train[:,24])
-new_Xtest = multiple_feat(tx_test[:,21],tx_test[:,24])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,21,24)
 tx_train, tx_test = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,21],tx_train[:,29])
-new_Xtest = multiple_feat(tx_test[:,21],tx_test[:,29])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,21,29)
 tx_train, tx_test = feat_add(y_train,tx_train[:,21],new_x,new_Xtest,tx_train,tx_test)
 
-new_x = multiple_feat(tx_train[:,26],tx_train[:,29])
-new_Xtest = multiple_feat(tx_test[:,26],tx_test[:,29])
+new_x, new_Xtest =create_multiple(tx_train,tx_test,26,29)
 tx_train, tx_test = feat_add(y_train,tx_train[:,26],new_x,new_Xtest,tx_train,tx_test)
 
 print(np.shape(tx_train))

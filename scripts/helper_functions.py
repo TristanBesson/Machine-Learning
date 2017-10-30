@@ -215,7 +215,7 @@ def cross_validation(y, x, k_indices, k, lambda_, degree):
 
     y_pred = predict_labels(w,x_te)
     acc = accuracy(y_pred,y_te)
-    print(acc)
+    print("Accuracy: ",acc)
     return loss_tr, loss_te
 
 def build_k_indices(y, k_fold, seed):
@@ -230,6 +230,8 @@ def build_k_indices(y, k_fold, seed):
 
 def accuracy(y_predicted,y):
     return 1-sum(abs(y-y_predicted))/(2*len(y_predicted))
+
+
 #____________________________ BATCH ITER _____________________
 
 def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
