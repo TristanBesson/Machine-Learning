@@ -202,7 +202,7 @@ max_iters = 150
 seed = 1
 degree = 7
 k_fold = 4
-lambdas = np.logspace(-10, 0, 2)
+lambdas = np.logspace(-10, 0, 20)
 
 # split data in k fold
 k_indices = build_k_indices(y_train, k_fold, seed)
