@@ -6,19 +6,17 @@ def accuracy(y_predicted,y):
     # Compute the accuracy of the predictions
     return 1 - sum(abs(y - y_predicted))/(2*len(y_predicted))
 
-def cross_validation(y, x, indices_k, k, lambda_, degree, model_function):
+def cross_validation(y, x, k_indices, k, lambda_, degree, model_function):
     """return the loss of ridge regression."""
 
-    # Create two different set of indice
-    indice_test = indices_k[k]
-    indice_train = indices_k[~(np.arange(indices_k.shape[0]) == k)]
-    indice_train = indice_train.reshape(-1)
-
     # Separate train and test data in function of the indice
-    y_test = y[indice_test]
-    y_train = y[indice_train]
+    indice_test = k_indices[k]
+
     x_test = x[indice_test]
-    x_train = x[indice_train]
+    y_test = y[indice_test]
+
+    x_train = np.delete(x, indice_test, axis=0)
+    y_train = np.delete(y, indice_test, axis=0)
 
     initial_w = np.zeros((x_train.shape[1], 1))
     max_iters = 500
@@ -42,7 +40,7 @@ def cross_validation(y, x, indices_k, k, lambda_, degree, model_function):
     e_test = y_test - x_test.dot(w)
     loss_test = np.sqrt(2*compute_mse(e_test))
 
-    # Compute the prediction and check the accuracy
+    ## Compute the prediction and check the accuracy
     #y_pred = predict_labels(w, x_test)
     #acc = accuracy(y_pred, y_test)
     #print("Accuracy: ", acc)
@@ -72,7 +70,6 @@ def find_best_lambda(y,x, degree, k_fold, model):
 
     rmse_train = []
     rmse_test = []
-
 
     # cross validation
     for lambda_ in lambdas:
