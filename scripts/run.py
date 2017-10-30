@@ -208,47 +208,7 @@ degree = 4
 k_fold = 4
 best_lambda, _, _ = find_best_lambda(y_train,tx_train, degree, k_fold, ridge_regression)
 
-<<<<<<< Updated upstream
-best_lambda, best_rmse_tr, best_rmse_te = cross_validation_final(y_train,tx_train, degree, k_fold, ridge_regression)
-
-# seed = 1
-#
-# lambdas = np.logspace(-10, 0, 20)
-#
-# # split data in k fold
-# k_indices = build_k_indices(y_train, k_fold, seed)
-#
-# # define lists to store the loss of training data and test data
-# rmse_tr = []
-# rmse_te = []
-#
-# best_lambda = 0
-# min_erreur = 100
-#
-# # cross validation to find best parameters
-# for lambda_ in lambdas:
-#     print("\nlambda :", lambda_)
-#     rmse_tr_tmp = []
-#     rmse_te_tmp = []
-#
-#     for k in range(k_fold):
-#         loss_tr, loss_te = cross_validation(y_train, tx_train, k_indices, k, lambda_, degree)
-#         rmse_tr_tmp = np.mean(loss_tr)
-#         rmse_te_tmp = np.mean(loss_te)
-#
-#         if (min_erreur > rmse_te_tmp):
-#             print(min_erreur,">", rmse_te_tmp, "= best lambda found", )
-#             best_lambda = lambda_
-#             min_erreur = rmse_te_tmp
-#
-# print("\nBest lambda =", best_lambda, "\n")
-#print(rmse_tr, "\n\n")
-
-# Calcul du model avec le meilleur lambda
-#w,loss = least_squares(y_train, tx_train)
-=======
 # Compute with best lambda
->>>>>>> Stashed changes
 w, rmse = ridge_regression(y_train, tx_train, best_lambda)
 
 
