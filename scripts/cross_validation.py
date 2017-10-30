@@ -6,7 +6,7 @@ def accuracy(y_predicted,y):
     # Compute the accuracy of the predictions
     return 1 - sum(abs(y - y_predicted))/(2*len(y_predicted))
 
-def cross_validation(y, x, k_indices, k, lambda_, degree, model_function):
+def cross_validation_lambda(y, x, k_indices, k, lambda_, degree, model_function):
     """return the loss of ridge regression."""
 
     # Separate train and test data in function of the indice
@@ -77,7 +77,7 @@ def find_best_lambda(y,x, degree, k_fold, model):
         rmse_te_tmp = []
 
         for k in range(k_fold):
-            loss_train, loss_test = cross_validation(y, x, k_indices, k, lambda_, degree, model)
+            loss_train, loss_test = cross_validation_lambda(y, x, k_indices, k, lambda_, degree, model)
             rmse_train_tmp = np.mean(loss_train)
             rmse_test_tmp = np.mean(loss_test)
 
@@ -104,3 +104,40 @@ def find_best_lambda(y,x, degree, k_fold, model):
     print("\nBest lambda =", best_lambda, "\n")
 
     return best_lambda, best_rmse_train, best_rmse_test
+
+def cross_validation(y, x, k_indices, k, degree, model_function):
+    """return the loss of ridge regression."""
+
+    for k in range(k_fold):
+
+        # Separate train and test data in function of the indice
+        indice_test = k_indices[k]
+
+        x_test = x[indice_test]
+        y_test = y[indice_test]
+
+        x_train = np.delete(x, indice_test, axis=0)
+        y_train = np.delete(y, indice_test, axis=0)
+
+        initial_w = np.zeros((x_train.shape[1], 1))
+        max_iters = 500
+        gamma = 0.01
+
+        # Choose the correct model
+        model = model_function.__name__
+
+        if model == "least_squares_GD" or model == "least_squares_SGD" or model == "logistic_regression":
+            w, loss = model_function(y_train, x_train, initial_w, gamma)
+        else:
+            w, loss = model_function(y_train, x_train)
+
+        # Compute loss for train and test data
+        e_train = y_train - x_train.dot(w)
+        loss_train = np.sqrt(2*compute_mse(e_train))
+        e_test = y_test - x_test.dot(w)
+        loss_test = np.sqrt(2*compute_mse(e_test))
+
+        ## Compute the prediction and check the accuracy
+        y_pred = predict_labels(w, x_test)
+        acc = accuracy(y_pred, y_test)
+        print("Accuracy: ", acc)
