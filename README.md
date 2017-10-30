@@ -34,3 +34,15 @@ Contains a set of different transformation one can apply to data in order to cre
 _proj1-helpers.py_
 
 Functions furnished for the competition
+
+
+
+
+
+To run our classifier: 
+
+-put the train and test data csv files in a folder called data next to the scripts folder
+
+-open a terminal, navigate to the scripts directory, and type: python run.py
+
+-The corresponding prediction csv file will be saved isinde the data folder
